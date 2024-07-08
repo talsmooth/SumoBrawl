@@ -11,7 +11,6 @@ public class Sumo1 : Sumo
     void Start()
     {
         base.Start();
-        rb = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -19,12 +18,6 @@ public class Sumo1 : Sumo
         Vector3 direction = sumo2.transform.position - transform.position;
         direction.y = 0;
 
-        // Optional: Smoothly rotate towards sumo2
-        /*if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
-        }*/
 
         rb.angularVelocity = Vector3.zero;
         PerformMovement();
@@ -42,6 +35,7 @@ public class Sumo1 : Sumo
             launch = true;
             rb.AddForce(transform.forward * speed * 1.3f, ForceMode.Acceleration);
             launchEffect.Play();
+
         }
 
         else 
@@ -51,6 +45,7 @@ public class Sumo1 : Sumo
 
         }
 
+   
 
         // Check for horizontal input for rotation
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) && !launch)

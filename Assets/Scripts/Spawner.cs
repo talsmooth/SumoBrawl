@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using System.Threading;
+using UnityEditor;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject food;
+    public List<GameObject> Foods = new List<GameObject>();
+
     public float circleRadius = 5f;
     public float spawnRate;
     float timer;
@@ -26,9 +29,10 @@ public class Spawner : MonoBehaviour
 
          SpawnFood();
          rate = Random.Range(0, spawnRate);
-            Debug.Log(rate);
-         timer = 0;
+            timer = 0;
 
+
+       
         }
     }
 
@@ -45,8 +49,24 @@ public class Spawner : MonoBehaviour
 
         Vector3 position = new Vector3(x, transform.position.y, z);
 
-        // Instantiate object at calculated position
-        Instantiate(food, position, Quaternion.identity);
+  
+
+        int rand = Random.Range(0, Foods.Count);
+        if (Foods[rand].tag == "Food" || Foods[rand].tag == "Trap")
+        {
+
+            GameObject tempFood = Instantiate(Foods[rand], position, Quaternion.identity);
+            tempFood.transform.parent = transform;
+
+        }
+
+        else
+        {
+            GameObject tempFood = Instantiate(Foods[rand], position + new Vector3(0,5,0), Quaternion.identity);
+            tempFood.transform.parent = transform;
+
+        }
+       
     }
 
 

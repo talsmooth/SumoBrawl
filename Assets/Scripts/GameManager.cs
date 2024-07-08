@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
     public GameObject gameOver;
     public GameObject redWinsText;
     public GameObject blueWinsText;
+    public GameObject particleLocation;
+    bool isGameOver;
+
+    public ParticleSystem redParticle;
+    public ParticleSystem blueParticle;
 
     bool blueWins;
 
@@ -60,7 +65,10 @@ public class GameManager : MonoBehaviour
         time = roundTime;
         roundTimeText.text = roundTime.ToString();
         gameOver.SetActive(false);
-        
+
+        blueParticle.gameObject.SetActive(false);
+        redParticle.gameObject.SetActive(false);
+
     }
 
     void Update()
@@ -89,9 +97,8 @@ public class GameManager : MonoBehaviour
         if (blueScore == scoreToWin || redScore == scoreToWin)
         {
             GameOver();
-         
-
-
+            blueScore = 0;
+            redScore = 0;
         }
 
         if (time <= 0 )
@@ -127,18 +134,23 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         gameOver.SetActive(true);
-        Time.timeScale = 0;
+        Time.timeScale = 1;
 
         if (blueScore == scoreToWin)
         {
+         
             blueWinsText.SetActive(true);
+            blueParticle.gameObject.SetActive(true);
+            blueParticle.Play();
 
         }
 
-        else
+        else if (redScore == scoreToWin)
         {
+           
             redWinsText.SetActive(true);
-
+            redParticle.gameObject.SetActive(true);
+            redParticle.Play();
         }
 
 

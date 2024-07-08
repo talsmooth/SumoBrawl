@@ -12,20 +12,13 @@ public class Sumo2 : Sumo
     void Start()
     {
         base.Start();
-        rb = GetComponent<Rigidbody>();
+      
     }
 
     void FixedUpdate()
     {
         Vector3 direction = sumo2.transform.position - transform.position;
         direction.y = 0;
-
-        // Optional: Smoothly rotate towards sumo2
-        /*if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
-        }*/
 
         rb.angularVelocity = Vector3.zero;
         PerformMovement();

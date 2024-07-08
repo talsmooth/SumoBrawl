@@ -5,25 +5,35 @@ using TMPro;
 
 public class Sumo : MonoBehaviour
 {
+    [Header("Stats")]   
     public float speed;
     public float startMass;
+    public float boostTime;
     [HideInInspector] public Rigidbody rb;
 
     float size;
-    public float boostTime;
     float timer;
-    public bool boost;
+    [HideInInspector] public bool boost;
+
+    [Header("GUI")]
     public TextMeshProUGUI boostTimer;
     public Camera cam;
 
+    [Header("Effects")]
     public ParticleSystem launchEffect;
     public GameObject hitEffect;
 
+    [Header("Audio")]
 
-    AudioSource audio;
+    protected AudioSource audio;
+    public AudioClip boostSound;
+    public AudioClip clashSound;
+    public AudioClip devourSound;
+    public AudioClip fallSound;
 
 
-    
+
+
 
     protected virtual void Start()
     {
@@ -32,9 +42,8 @@ public class Sumo : MonoBehaviour
         timer = boostTime;
         boostTimer.gameObject.SetActive(false);
         cam = Camera.main;
+        audio = GetComponent<AudioSource>();                            
 
-
-        audio = cam.GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -77,12 +86,15 @@ public class Sumo : MonoBehaviour
             size += 0.25f;
 
             Destroy(other.gameObject);
+
+            audio.clip = devourSound; audio.Play();
         }
 
 
 
         if (other.tag == ("RedPlayer") || other.tag == ("BluePlayer"))
         {
+           
             GameObject tempHitEffect = Instantiate(hitEffect,transform.position,transform.rotation);
             Destroy(tempHitEffect,2);
 
@@ -109,7 +121,7 @@ public class Sumo : MonoBehaviour
 
             Destroy(tempHitEffect, 2);
 
-            //audio.Play();
+            audio.clip = clashSound; audio.Play();  
 
             }    
 
