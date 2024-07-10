@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public ParticleSystem blueParticle;
 
     bool blueWins;
+    private bool particles;
 
 
 
@@ -97,8 +98,7 @@ public class GameManager : MonoBehaviour
         if (blueScore == scoreToWin || redScore == scoreToWin)
         {
             GameOver();
-            blueScore = 0;
-            redScore = 0;
+           
         }
 
         if (time <= 0 )
@@ -135,13 +135,21 @@ public class GameManager : MonoBehaviour
     {
         gameOver.SetActive(true);
         Time.timeScale = 1;
+       
+    
 
         if (blueScore == scoreToWin)
         {
-         
+            bool particle;
             blueWinsText.SetActive(true);
             blueParticle.gameObject.SetActive(true);
-            blueParticle.Play();
+            if (!particles)
+            {
+                
+                blueParticle.Play();
+                particles = true;
+            }
+           
 
         }
 
@@ -150,7 +158,12 @@ public class GameManager : MonoBehaviour
            
             redWinsText.SetActive(true);
             redParticle.gameObject.SetActive(true);
-            redParticle.Play();
+            if (!particles)
+            {
+                
+                redParticle.Play();
+                particles = true;
+            }
         }
 
 
@@ -160,6 +173,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(0);
 
         }
+        
     }
 
   
